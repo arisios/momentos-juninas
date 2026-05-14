@@ -1,0 +1,11 @@
+{
+  "name": "momentos-juninas",
+  "version": "1.0.0",
+  "description": "Álbum Digital Interativo — Juninas do Rio 2026",
+  "scripts": {
+    "install:all": "cd backend && npm install && cd ../frontend && npm install",
+    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend": "cd frontend && npm run dev",
+    "setup": "mkdir -p database && npm run install:all && echo '✅ Setup concluído!'"
+  }
+}
