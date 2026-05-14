@@ -4,75 +4,76 @@
 
 @layer base {
   body {
-    @apply font-sans bg-amber-50 text-amber-950;
+    @apply font-sans;
+    background: linear-gradient(160deg, #F5E7D3 0%, #E9D1B5 100%);
+    color: #3A1F14;
+    min-height: 100vh;
     -webkit-tap-highlight-color: transparent;
   }
 }
 
 @layer components {
   .bg-junina {
-    background: linear-gradient(160deg, #fffbeb 0%, #fef3c7 50%, #fde68a 100%);
+    background: linear-gradient(160deg, #F5E7D3 0%, #E9D1B5 60%, #E0C4A0 100%);
     min-height: 100vh;
   }
 
   .card-junina {
-    @apply bg-white/80 backdrop-blur-sm rounded-2xl border border-amber-200/60 shadow-md;
+    background: rgba(255, 255, 255, 0.82);
+    backdrop-filter: blur(8px);
+    border-radius: 1.25rem;
+    border: 1px solid rgba(199, 154, 59, 0.25);
+    box-shadow: 0 4px 20px rgba(58, 31, 20, 0.08);
   }
 
   .input-junina {
-    @apply w-full px-4 py-3 rounded-xl bg-amber-50 border border-amber-200
-           text-amber-900 placeholder-amber-400
-           focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent
-           transition-all text-sm;
+    @apply w-full px-4 py-3 rounded-xl text-sm transition-all;
+    background: rgba(255,255,255,0.7);
+    border: 1.5px solid #C79A3B55;
+    color: #3A1F14;
+    outline: none;
+  }
+  .input-junina::placeholder { color: #C79A3B99; }
+  .input-junina:focus {
+    border-color: #C21874;
+    box-shadow: 0 0 0 3px rgba(194, 24, 116, 0.12);
+    background: #fff;
   }
 
   .btn-primary {
-    @apply w-full py-3 rounded-xl font-semibold text-sm
-           bg-gradient-to-r from-amber-500 to-rose-500
-           text-white shadow-md
-           hover:shadow-lg hover:from-amber-400 hover:to-rose-400
+    @apply w-full py-3 rounded-xl font-semibold text-sm text-white
            active:scale-95 transition-all disabled:opacity-50 disabled:cursor-not-allowed;
+    background: linear-gradient(135deg, #C21874 0%, #6F2DA8 100%);
+    box-shadow: 0 4px 16px rgba(194, 24, 116, 0.35);
+  }
+  .btn-primary:hover:not(:disabled) {
+    box-shadow: 0 6px 20px rgba(194, 24, 116, 0.45);
+    filter: brightness(1.05);
   }
 
   .btn-secondary {
-    @apply px-4 py-2 rounded-xl text-sm font-medium
-           border border-amber-200 text-amber-700
-           hover:bg-amber-50 active:scale-95 transition-all;
+    @apply px-4 py-2 rounded-xl text-sm font-medium transition-all active:scale-95;
+    border: 1.5px solid #C79A3B55;
+    color: #4B1E6D;
+    background: transparent;
   }
+  .btn-secondary:hover { background: rgba(199,154,59,0.1); }
 
-  /* Mapa da festa */
+  /* ── Mapa da festa ── */
   .festival-map {
     position: relative;
     width: 100%;
-    aspect-ratio: 3/4;
+    aspect-ratio: 1275 / 1234;
     border-radius: 1.25rem;
     overflow: hidden;
-    background:
-      radial-gradient(ellipse at 50% 10%, #fef9e7 0%, transparent 60%),
-      radial-gradient(ellipse at 20% 60%, #d1fae5 0%, transparent 40%),
-      radial-gradient(ellipse at 80% 70%, #d1fae5 0%, transparent 30%),
-      linear-gradient(180deg, #fef3c7 0%, #fde68a 60%, #fcd34d 100%);
-    border: 2px solid #f59e0b;
-    box-shadow: 0 8px 32px rgba(180,83,9,0.15), inset 0 1px 0 rgba(255,255,255,0.5);
+    background-image: url('/mapaalbum.png');
+    background-size: cover;
+    background-position: center top;
+    border: 2px solid #C79A3B;
+    box-shadow: 0 8px 32px rgba(58,31,20,0.18);
   }
 
-  .festival-map::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background:
-      radial-gradient(circle at 50% 50%, rgba(255,255,255,0.15) 0%, transparent 70%);
-    pointer-events: none;
-  }
-
-  /* Paths do mapa */
-  .map-path {
-    position: absolute;
-    background: rgba(255,255,255,0.4);
-    border-radius: 999px;
-  }
-
-  /* Spots das figurinhas */
+  /* ── Spots das figurinhas ── */
   .mission-spot {
     position: absolute;
     transform: translate(-50%, -50%);
@@ -84,36 +85,44 @@
   }
 
   .mission-spot-inner {
-    @apply flex items-center justify-center rounded-full
-           border-2 transition-all duration-300
-           active:scale-90;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    border: 2.5px solid transparent;
+    transition: all 0.25s;
     width: 52px;
     height: 52px;
     font-size: 1.5rem;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15), 0 0 0 3px rgba(255,255,255,0.8);
   }
+  .mission-spot-inner:active { transform: scale(0.88); }
 
   .mission-spot-inner.empty {
-    @apply bg-white/90 border-amber-300;
+    background: rgba(255,255,255,0.92);
+    border-color: #C79A3B;
+    box-shadow: 0 3px 12px rgba(58,31,20,0.18), 0 0 0 3px rgba(199,154,59,0.2);
     animation: pulse-spot 2.5s ease-in-out infinite;
   }
 
   .mission-spot-inner.filled {
-    border-color: #f59e0b;
-    box-shadow: 0 4px 16px rgba(245,158,11,0.4), 0 0 0 3px rgba(255,255,255,0.9);
+    border-color: #C21874;
+    box-shadow: 0 4px 16px rgba(194,24,116,0.35), 0 0 0 3px rgba(255,255,255,0.9);
   }
 
   .mission-spot-label {
-    @apply text-center font-semibold mt-1 px-1.5 py-0.5 rounded-lg;
+    text-align: center;
+    font-weight: 700;
+    margin-top: 3px;
+    padding: 2px 5px;
+    border-radius: 6px;
     font-size: 9px;
     line-height: 1.2;
-    max-width: 64px;
-    background: rgba(255,255,255,0.85);
-    color: #92400e;
+    max-width: 70px;
+    background: rgba(255,255,255,0.88);
+    color: #4B1E6D;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 70px;
   }
 
   .mission-spot-inner.filled img,
@@ -126,6 +135,6 @@
 }
 
 @keyframes pulse-spot {
-  0%, 100% { box-shadow: 0 4px 12px rgba(0,0,0,0.15), 0 0 0 3px rgba(255,255,255,0.8); }
-  50%       { box-shadow: 0 4px 12px rgba(245,158,11,0.3), 0 0 0 5px rgba(245,158,11,0.2); }
+  0%, 100% { box-shadow: 0 3px 12px rgba(58,31,20,0.18), 0 0 0 3px rgba(199,154,59,0.2); }
+  50%       { box-shadow: 0 3px 12px rgba(194,24,116,0.25), 0 0 0 5px rgba(194,24,116,0.15); }
 }

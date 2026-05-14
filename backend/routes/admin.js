@@ -4,6 +4,7 @@ const path = require('path');
 const fs = require('fs');
 const { getDb } = require('../database/db');
 const { adminMiddleware } = require('../middleware/auth');
+const { getAllUsers } = require('../../../../shared/users-db');
 
 const router = express.Router();
 
@@ -115,7 +116,7 @@ router.delete('/albums/:id', adminMiddleware, (req, res) => {
 // ── Users ─────────────────────────────────────────────────────
 router.get('/users', adminMiddleware, (req, res) => {
   const db = getDb();
-  const users = db.prepare("SELECT id, instagram, role, created_at FROM users ORDER BY created_at DESC").all();
+  const users = getAllUsers();
   const enriched = users.map(u => {
     const uploadCount = db.prepare('SELECT COUNT(*) as c FROM uploads WHERE user_id=?').get(u.id).c;
     const completionCount = db.prepare('SELECT COUNT(*) as c FROM album_completions WHERE user_id=?').get(u.id).c;
@@ -139,6 +140,26 @@ router.get('/uploads', adminMiddleware, (req, res) => {
   if (album_id) { query += ' WHERE up.album_id=?'; params.push(parseInt(album_id)); }
   query += ' ORDER BY up.created_at DESC';
   res.json({ uploads: db.prepare(query).all(...params) });
+});
+
+// ── Missions (positions) ──────────────────────────────────────
+router.get('/missions', adminMiddleware, (req, res) => {
+  const db = getDb();
+  res.json({ missions: db.prepare('SELECT * FROM missions ORDER BY order_num').all() });
+});
+
+router.patch('/missions/positions', adminMiddleware, (req, res) => {
+  const { positions } = req.body;
+  if (!positions) return res.status(400).json({ error: 'positions é obrigatório' });
+  const db = getDb();
+  const update = db.prepare('UPDATE missions SET map_x=?, map_y=? WHERE id=?');
+  const updateAll = db.transaction(() => {
+    for (const [id, pos] of Object.entries(positions)) {
+      update.run(parseFloat(pos.x), parseFloat(pos.y), parseInt(id));
+    }
+  });
+  updateAll();
+  res.json({ missions: db.prepare('SELECT * FROM missions ORDER BY order_num').all() });
 });
 
 // ── Stats ─────────────────────────────────────────────────────

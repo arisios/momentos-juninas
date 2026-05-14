@@ -1,5 +1,4 @@
 const Database = require('better-sqlite3');
-const bcrypt = require('bcryptjs');
 const path = require('path');
 
 const DB_PATH = path.join(__dirname, '../../database/momentos.db');
@@ -10,7 +9,7 @@ function getDb() {
   if (!db) {
     db = new Database(DB_PATH);
     db.pragma('journal_mode = WAL');
-    db.pragma('foreign_keys = ON');
+    db.pragma('foreign_keys = OFF'); // user_id agora referencia banco externo
   }
   return db;
 }
@@ -31,14 +30,6 @@ function initDb() {
   const db = getDb();
 
   db.exec(`
-    CREATE TABLE IF NOT EXISTS users (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      instagram TEXT NOT NULL UNIQUE,
-      password TEXT NOT NULL,
-      role TEXT NOT NULL DEFAULT 'user',
-      created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-    );
-
     CREATE TABLE IF NOT EXISTS albums (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       name TEXT NOT NULL,
@@ -72,9 +63,6 @@ function initDb() {
       file_type TEXT NOT NULL,
       file_size INTEGER,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-      FOREIGN KEY (user_id) REFERENCES users(id),
-      FOREIGN KEY (album_id) REFERENCES albums(id),
-      FOREIGN KEY (mission_id) REFERENCES missions(id),
       UNIQUE(user_id, album_id, mission_id)
     );
 
@@ -87,9 +75,7 @@ function initDb() {
       auth_collab INTEGER DEFAULT 0,
       auth_image_use INTEGER DEFAULT 0,
       completed_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-      UNIQUE(user_id, album_id),
-      FOREIGN KEY (user_id) REFERENCES users(id),
-      FOREIGN KEY (album_id) REFERENCES albums(id)
+      UNIQUE(user_id, album_id)
     );
   `);
 
@@ -100,12 +86,8 @@ function initDb() {
     console.log('✅ 9 missões criadas');
   }
 
-  const adminExists = db.prepare("SELECT id FROM users WHERE role='admin' LIMIT 1").get();
-  if (!adminExists) {
-    const hash = bcrypt.hashSync('admin123', 10);
-    db.prepare("INSERT INTO users (instagram, password, role) VALUES (?, ?, 'admin')").run('admin', hash);
-    console.log('✅ Admin criado: instagram=admin, senha=admin123');
-  }
+  // Inicializa usuários compartilhados
+  require('../../../../shared/users-db').getUsersDb();
 
   console.log('✅ Banco de dados Momentos Juninas inicializado');
   return db;

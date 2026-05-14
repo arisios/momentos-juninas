@@ -6,6 +6,7 @@ import AuthPage   from './pages/AuthPage';
 import Home       from './pages/Home';
 import AlbumMap   from './pages/AlbumMap';
 import AdminPanel from './pages/AdminPanel';
+import MapEditor from './pages/MapEditor';
 import LoadingSpinner from './components/LoadingSpinner';
 
 function PrivateRoute({ children, adminOnly = false }) {
@@ -32,6 +33,7 @@ export default function App() {
           <Route path="/"      element={<PrivateRoute><Home /></PrivateRoute>} />
           <Route path="/album/:id" element={<PrivateRoute><AlbumMap /></PrivateRoute>} />
           <Route path="/admin" element={<PrivateRoute adminOnly><AdminPanel /></PrivateRoute>} />
+          <Route path="/admin/mapa" element={<PrivateRoute adminOnly><MapEditor /></PrivateRoute>} />
           <Route path="*"      element={<Navigate to="/" replace />} />
         </Routes>
       </BrowserRouter>
