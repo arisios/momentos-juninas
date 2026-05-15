@@ -16,16 +16,16 @@ export function AuthProvider({ children }) {
     setLoading(false);
   }, []);
 
-  const login = async (instagram, password) => {
-    const { data } = await api.post('/auth/login', { instagram, password });
+  const login = async (identifier, password) => {
+    const { data } = await api.post('/auth/login', { identifier, password });
     localStorage.setItem('mj_token', data.token);
     localStorage.setItem('mj_user', JSON.stringify(data.user));
     setUser(data.user);
     return data.user;
   };
 
-  const register = async (instagram, password) => {
-    const { data } = await api.post('/auth/register', { instagram, password });
+  const register = async (payload) => {
+    const { data } = await api.post('/auth/register', payload);
     localStorage.setItem('mj_token', data.token);
     localStorage.setItem('mj_user', JSON.stringify(data.user));
     setUser(data.user);
