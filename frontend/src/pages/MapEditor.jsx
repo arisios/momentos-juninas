@@ -140,12 +140,12 @@ export default function MapEditor() {
                 onTouchStart={e => { e.preventDefault(); setDragging(m.id); }}
               >
                 <div style={{
-                  width: 52, height: 52,
+                  width: 32, height: 32,
                   borderRadius: '50%',
                   background: isDragging ? '#f59e0b' : 'rgba(255,255,255,0.95)',
                   border: isDragging ? '3px solid #d97706' : '2px solid #f59e0b',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  fontSize: '1.4rem',
+                  fontSize: '0.85rem',
                   boxShadow: isDragging
                     ? '0 8px 24px rgba(0,0,0,0.4)'
                     : '0 3px 10px rgba(0,0,0,0.2)',

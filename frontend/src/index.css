@@ -91,9 +91,9 @@
     border-radius: 9999px;
     border: 2.5px solid transparent;
     transition: all 0.25s;
-    width: 52px;
-    height: 52px;
-    font-size: 1.5rem;
+    width: 32px;
+    height: 32px;
+    font-size: 0.9rem;
   }
   .mission-spot-inner:active { transform: scale(0.88); }
 
@@ -112,12 +112,12 @@
   .mission-spot-label {
     text-align: center;
     font-weight: 700;
-    margin-top: 3px;
-    padding: 2px 5px;
-    border-radius: 6px;
-    font-size: 9px;
+    margin-top: 2px;
+    padding: 1px 3px;
+    border-radius: 4px;
+    font-size: 7px;
     line-height: 1.2;
-    max-width: 70px;
+    max-width: 48px;
     background: rgba(255,255,255,0.88);
     color: #4B1E6D;
     white-space: nowrap;

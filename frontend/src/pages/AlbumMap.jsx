@@ -209,8 +209,8 @@ export default function AlbumMap() {
                   </div>
                   <span className="mission-spot-label">{mission.title}</span>
                   {filled && (
-                    <span className="absolute -top-1 -right-1 rounded-full w-4 h-4 flex items-center justify-center text-white font-bold shadow-sm"
-                      style={{ background: '#C21874', fontSize: 9 }}>✓</span>
+                    <span className="absolute -top-0.5 -right-0.5 rounded-full w-3 h-3 flex items-center justify-center text-white font-bold shadow-sm"
+                      style={{ background: '#C21874', fontSize: 7 }}>✓</span>
                   )}
                 </div>
               );
