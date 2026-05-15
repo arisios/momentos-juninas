@@ -110,19 +110,7 @@
   }
 
   .mission-spot-label {
-    text-align: center;
-    font-weight: 700;
-    margin-top: 2px;
-    padding: 1px 3px;
-    border-radius: 4px;
-    font-size: 7px;
-    line-height: 1.2;
-    max-width: 48px;
-    background: rgba(255,255,255,0.88);
-    color: #4B1E6D;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    display: none;
   }
 
   .mission-spot-inner.filled img,
