@@ -106,7 +106,7 @@ export default function MapEditor() {
           className="relative w-full mx-auto select-none"
           style={{
             maxWidth: 600,
-            aspectRatio: '1275 / 1234',
+            aspectRatio: '1086 / 1448',
             backgroundImage: "url('/mapaalbum.png')",
             backgroundSize: 'cover',
             backgroundPosition: 'center top',
